@@ -894,7 +894,7 @@ void SDFMap::odomCallback(const nav_msgs::msg::Odometry::ConstSharedPtr odom) {
 
     md_.camera_pos_(0) = odom->pose.pose.position.x;
     md_.camera_pos_(1) = odom->pose.pose.position.y;
-    md_.camera_pos_(2) = odom->pose.pose.position.z;
+    md_.camera_pos_(2) = -1;
 
     md_.has_odom_ = true;
 }
@@ -940,7 +940,7 @@ void SDFMap::cloudCallback(const sensor_msgs::msg::PointCloud2::SharedPtr img) {
 
     for (size_t i = 0; i < latest_cloud.points.size(); ++i) {
         pt = latest_cloud.points[i];
-        p3d(0) = pt.x, p3d(1) = pt.y, p3d(2) = pt.z;
+        p3d(0) = pt.x, p3d(1) = pt.y, p3d(2) = -1.0;
 
         /* point inside update range */
         Eigen::Vector3d devi = p3d - md_.camera_pos_;
@@ -969,6 +969,9 @@ void SDFMap::cloudCallback(const sensor_msgs::msg::PointCloud2::SharedPtr img) {
                         posToIndex(p3d_inf, inf_pt);
 
                         if (!isInMap(inf_pt)) continue;
+                        // std::cout<<"mp_.map_origin_"<<mp_.map_origin_<<std::endl;
+                        // std::cout<<"mp_.map_voxel_num_"<<mp_.map_voxel_num_<<std::endl;
+                        // std::cout<<"p3d_inf"<<p3d_inf<<"inf_pt"<<inf_pt<<std::endl;
 
                         int idx_inf = toAddress(inf_pt);
 

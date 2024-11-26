@@ -102,11 +102,11 @@ void KinoReplanFSM::waypointCallback(const nav_msgs::msg::Path::SharedPtr msg) {
 void KinoReplanFSM::odometryCallback(const nav_msgs::msg::Odometry::SharedPtr msg) {
   odom_pos_(0) = msg->pose.pose.position.x;
   odom_pos_(1) = msg->pose.pose.position.y;
-  odom_pos_(2) = msg->pose.pose.position.z;
+  odom_pos_(2) = -1;
 
   odom_vel_(0) = msg->twist.twist.linear.x;
   odom_vel_(1) = msg->twist.twist.linear.y;
-  odom_vel_(2) = msg->twist.twist.linear.z;
+  odom_vel_(2) = 0;
 
   odom_orient_.w() = msg->pose.pose.orientation.w;
   odom_orient_.x() = msg->pose.pose.orientation.x;
